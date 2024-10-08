@@ -1,28 +1,3 @@
-using UnityEngine;
-
-namespace Cinemachine.Examples
-{
-    /// <summary>
-    /// An add-on module for Cinemachine Virtual Camera that locks the camera's Y co-ordinate
-    /// </summary>
-    [ExecuteAlways]
-    [SaveDuringPlay]
-    [AddComponentMenu("")] // Hide in menu
-    public class CustomLockCameraY : CinemachineExtension
-    {
-        [Tooltip("Lock the camera's Y position to this value")]
-        public float m_YPosition = 10;
-
-        protected override void PostPipelineStageCallback(
-            CinemachineVirtualCameraBase vcam,
-            CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
-        {
-            if (stage == CinemachineCore.Stage.Finalize)
-            {
-                var pos = state.RawPosition;
-                pos.y = m_YPosition;
-                state.RawPosition = pos;
-            }
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:5217e2d0f12395838b527a439efc73894642e4349aa8c78e1b3de546441f600d
+size 858

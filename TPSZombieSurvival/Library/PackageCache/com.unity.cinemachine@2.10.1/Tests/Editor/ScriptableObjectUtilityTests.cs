@@ -1,25 +1,3 @@
-using NUnit.Framework;
-using Cinemachine.Editor;
-using System.IO;
-
-namespace Tests.Editor
-{
-    [TestFixture]
-    public class ScriptableObjectUtilityTests
-    {
-        [Test]
-        public void CinemachineInstallPathIsValid()
-        {
-            var pathToCmLogo = Path.Combine(ScriptableObjectUtility.CinemachineInstallPath, "Editor/EditorResources/cm_logo_sm.png");
-            Assert.That(File.Exists(pathToCmLogo));
-        }
-
-        [Test]
-        public void CinemachineInstallRelativePathIsValid()
-        {
-            var relativePathToCmLogo = Path.Combine(ScriptableObjectUtility.CinemachineRealativeInstallPath, "Editor/EditorResources/cm_logo_sm.png");
-            var pathToCmLogo = Path.GetFullPath(relativePathToCmLogo);
-            Assert.That(File.Exists(pathToCmLogo));
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4649f6fa0278535a55d22e6792eadc90c92684cf300fbb8bf57a58181709e2e0
+size 812

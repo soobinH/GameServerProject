@@ -1,22 +1,3 @@
-﻿using UnityEngine;
-
-namespace Cinemachine.Examples
-{
-	public class PlayerLookAt : MonoBehaviour
-	{
-		public float speed = 5f;
-
-		void Update()
-		{
-#if ENABLE_LEGACY_INPUT_MANAGER
-			float horizontal = Input.GetAxis("Mouse X") * speed;
-			float vertical = Input.GetAxis("Mouse Y") * speed;
-
-			transform.Rotate(0f, horizontal, 0f, Space.World);
-			transform.Rotate(-vertical, 0f, 0f, Space.Self);
-#else
-		InputSystemHelper.EnableBackendsWarningMessage();
-#endif
-		}
-	}
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:03ca9c205d03d380544ee90aa28045168ae26bdf355e67520ea4071a3a0c1bfd
+size 472

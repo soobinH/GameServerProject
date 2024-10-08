@@ -1,25 +1,3 @@
-using System;
-using UnityEngine;
-
-namespace Cinemachine.Examples
-{
-    /// <summary>
-    /// Simple script that makes this transform look at a target.
-    /// </summary>
-    public class BossLookAt : MonoBehaviour
-    {
-        [Tooltip("Look at this transform")]
-        public Transform m_LookAt;
-        [Tooltip("Lock the camera's X rotation to this value (in angles)")]
-        public float m_RotationX = 0;
-        [Tooltip("Lock the camera's Z rotation to this value (in angles)")]
-        public float m_RotationZ = 0;
-
-        void Update()
-        {
-            transform.LookAt(m_LookAt);
-            var euler = transform.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(m_RotationX, euler.y, m_RotationZ);
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:25b04323dad23d81c8840248c8f14d4ec05b16e510cdd8a189c503a3f9999603
+size 760

@@ -1,29 +1,3 @@
-﻿using UnityEditor;
-
-namespace Unity.PlasticSCM.Editor
-{
-    internal static class VCSPlugin
-    {
-        internal static bool IsEnabled()
-        {
-            return GetVersionControl() == "PlasticSCM";
-        }
-
-        internal static void Disable()
-        {
-            SetVersionControl("Visible Meta Files");
-
-            AssetDatabase.SaveAssets();
-        }
-
-        static string GetVersionControl()
-        {
-            return VersionControlSettings.mode;
-        }
-
-        static void SetVersionControl(string versionControl)
-        {
-            VersionControlSettings.mode = versionControl;
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ada06004bcd7fa1f11872e78032016b14738ca47333f3b53d5293b38706060e6
+size 631
