@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     public readonly string moveAxis = "Vertical";
+    public readonly string moveHorizontalAxis = "Horizontal";
+    public readonly string moveVerticalAxis = "Vertical";
     public readonly string rotateAxis = "Horizontal";
     public readonly string fireButton = "Fire1";
     public readonly string reloadButton = "Reload";
@@ -14,13 +16,15 @@ public class PlayerInput : MonoBehaviour
     public float rotate { get; private set; }
     public bool fire { get; private set; }
     public bool reload { get; private set; }
+    public Vector2 moveInput { get; private set; }
     #endregion
 
     void Update()
     {
         //게임오버 상태에서는 입력을 감지하지않음
-        if (GameManager.instance != null && GameManager.instance.isGameOver)
+        if (GameManager.Instance != null && GameManager.Instance.isGameOver)
         {
+            moveInput = Vector2.zero;
             move = 0;
             rotate = 0;
             fire = false;
@@ -28,6 +32,8 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
+        moveInput = new Vector2(Input.GetAxis(moveHorizontalAxis), Input.GetAxis(moveVerticalAxis));
+        if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
         move = Input.GetAxis(moveAxis);
         rotate = Input.GetAxis(rotateAxis);
         fire = Input.GetButton(fireButton);
