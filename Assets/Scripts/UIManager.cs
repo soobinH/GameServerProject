@@ -16,13 +16,15 @@ public class UIManager : MonoBehaviour
     }
 
     public Text ammoText;
-    public Text scoreText;
-    public Text waveText;
+    // public Text scoreText;
+    // public Text waveText;
     public GameObject gameoverUI;
 
-    public void UpdateAmmoText(int magAmmo, int ammoRemain) { }
+    public void UpdateAmmoText(int magAmmo, int ammoRemain)
+    {
+        ammoText.text = magAmmo + "/" + ammoRemain;
+    }
     public void SetActiveGameOverUI(bool active) { gameoverUI.SetActive(true); }
     public void GameRestart() { SceneManager.LoadScene(SceneManager.GetActiveScene().name); }
-
 
 }
