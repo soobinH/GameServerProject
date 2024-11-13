@@ -8,8 +8,8 @@ public class EnemySpawner : MonoBehaviour
     public float damageMax = 40f;
     public float damageMin = 20f;
 
-    public float healthMax = 200f;
-    public float healthMin = 100f;
+    public float healthMax = 100f;
+    public float healthMin = 50f;
 
     public float speedMax = 3f;
     public float speedMin = 1f;

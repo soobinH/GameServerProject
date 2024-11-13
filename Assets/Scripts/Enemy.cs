@@ -73,7 +73,7 @@ public class Enemy : LivingEntity
     {
         base.Die();
 
-        Collider[] enemyColliders = GetComponent<Collider[]>();
+        Collider[] enemyColliders = GetComponents<Collider>();
         for (int i = 0; i < enemyColliders.Length; i++)
         {
             enemyColliders[i].enabled = false;

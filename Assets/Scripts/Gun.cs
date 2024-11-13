@@ -61,12 +61,14 @@ public class Gun : MonoBehaviour
         //채워야 할 탄창 = 총 총알량 - 현재 총알
         int ammoToFill = magCapacity - magAmmo;
 
+        //현재 남은 총알이 남은 탄알 보다 적으면
         if(ammoRemain < ammoToFill)
         {
+            //채워야 할 탄창은 = 남은 탄창
             ammoToFill = ammoRemain;
         }
         magAmmo += ammoToFill;
-        ammoRemain -= ammoRemain;
+        ammoRemain -= ammoToFill;
         state = State.Ready;
     }
     #endregion

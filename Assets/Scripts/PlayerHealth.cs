@@ -46,6 +46,7 @@ public class PlayerHealth : LivingEntity
         if (!dead) playerAudioPlayer.PlayOneShot(hitClip);
         base.onDamage(damage, hitPoint, hitNormal);
         slider.value = health;
+        Debug.Log($"damaged");
     }
 
     public override void Die()
