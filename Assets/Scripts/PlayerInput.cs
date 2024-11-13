@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public readonly string moveAxis = "Vertical";
-    public readonly string moveHorizontalAxis = "Horizontal";
-    public readonly string moveVerticalAxis = "Vertical";
-    public readonly string rotateAxis = "Horizontal";
-    public readonly string fireButton = "Fire1";
-    public readonly string reloadButton = "Reload";
+    public string moveAxis = "Vertical";
+    public string moveHorizontalAxis = "Horizontal";
+    public string moveVerticalAxis = "Vertical";
+    public string rotateAxis = "Horizontal";
+    public string fireButton = "Fire1";
+    public string reloadButton = "Reload";
 
     #region 움직임,회전,발사,재장전 입력값을 받는 프로퍼티들
     public float move { get; private set; }
@@ -17,6 +17,7 @@ public class PlayerInput : MonoBehaviour
     public bool fire { get; private set; }
     public bool reload { get; private set; }
     public Vector2 moveInput { get; private set; }
+    public Vector3 moveInput3 { get; private set; }
     #endregion
 
     void Update()
@@ -33,6 +34,7 @@ public class PlayerInput : MonoBehaviour
         }
 
         moveInput = new Vector2(Input.GetAxis(moveHorizontalAxis), Input.GetAxis(moveVerticalAxis));
+        moveInput3 = new Vector3(Input.GetAxis(moveHorizontalAxis),0, Input.GetAxis(moveVerticalAxis));
         if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
         move = Input.GetAxis(moveAxis);
         rotate = Input.GetAxis(rotateAxis);

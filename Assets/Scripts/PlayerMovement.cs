@@ -9,60 +9,64 @@ public class PlayerMovement : MonoBehaviour
     public float rotateSpeed = 180f;
     public float speedSmoothTime = 0.1f;
     public Vector3 velocity;
-    [Range(0.01f, 0.1f)] public float airControlPercent;
-
-    public float currentSpeed => new Vector2(characterController.velocity.x,
-    characterController.velocity.z).magnitude;
 
     private float currentVelocityY;
     private float speedSmoothVelocity;
     private float turnSmoothVelocity;
 
-    private CharacterController characterController;
     private PlayerInput playerInput;
     private Rigidbody playerRigidbody;
     private Animator playerAnimator;
 
+
+
+    private Camera _camera;
+    private bool isLookAt = true;
+
     void Start()
     {
+        _camera = Camera.main;
         playerInput = GetComponent<PlayerInput>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
-        characterController = GetComponent<CharacterController>();
+    }
+
+    private void Update(){
+        //UpdateAnimation(playerInput.moveInput);
     }
 
     private void FixedUpdate()
     {
+        #region 마우스가 바라보는 방향으로 플레이어 회전
+        if (isLookAt == false) return;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane plane = new Plane(Vector3.up, Vector3.up);
+
+        if (plane.Raycast(ray, out float distance))
+        {
+            Vector3 direction = ray.GetPoint(distance) - transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        }
+
         Move(playerInput.moveInput);
-        Rotate();
+        #endregion
+        
+        //Rotate();
 
         playerAnimator.SetFloat("Move", playerInput.move);
+
     }
 
     public void Move(Vector2 moveInput)
     {
-        Vector3 moveDistance = playerInput.move * transform.forward * moveSpeed * Time.deltaTime;
-        //+ playerInput.rotate * transform.right * moveSpeed * Time.deltaTime;
 
-        /*
-        var targetSpeed = moveSpeed * moveInput.magnitude;
-        var moveDirection = Vector3.Normalize(transform.forward * moveInput.y +
-        transform.right * moveInput.x);
+        Vector3 m_Input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        var smoothTime = characterController.isGrounded ? speedSmoothTime : speedSmoothTime / airControlPercent;
+        playerRigidbody.MovePosition(transform.position + m_Input * Time.fixedDeltaTime * moveSpeed);
 
-        targetSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
-
-        currentVelocityY += Time.deltaTime * Physics.gravity.y;
-
-        var velocity = moveDirection * targetSpeed + Vector3.up * currentVelocityY;
-
-        characterController.Move(velocity * Time.deltaTime);
-
-        if (characterController.isGrounded) currentVelocityY = 0f;
-
-        */
-        playerRigidbody.MovePosition(playerRigidbody.position + moveDistance);
+        //Vector3 moveDistance = playerInput.move * transform.forward * moveSpeed * Time.deltaTime;
+        //playerRigidbody.MovePosition(playerRigidbody.position + moveDistance);
 
     }
 
@@ -78,5 +82,15 @@ public class PlayerMovement : MonoBehaviour
 
         transform.eulerAngles = Vector3.up * targetRotation;
         */
+    }
+
+    private void UpdateAnimation(Vector2 moveInput)
+    {
+        var animationSpeedPercent = moveSpeed;
+
+        //입력으로 moveInput값을 받아서 애니메이터의 VerticalMove와 Horizontal Move 파라미터를 전달한다
+        playerAnimator.SetFloat("Vertical Move", moveInput.y * animationSpeedPercent, 0.05f, Time.deltaTime);
+        playerAnimator.SetFloat("Horizontal Move", moveInput.x * animationSpeedPercent, 0.05f, Time.deltaTime);
+        //수직 수평 방향 움직임이 moveInput값으로 즉시 변화되는게 아니라 이전 값에서 지금 설정한 값으로 연속적으로 부드럽게 변화하게된다
     }
 }

@@ -51,6 +51,7 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(0.03f);
         bulletLienRenderer.enabled = false;
     }
+    
     private IEnumerator ReloadRoutine()
     {
         state = State.Reloading;
@@ -67,9 +68,11 @@ public class Gun : MonoBehaviour
             //채워야 할 탄창은 = 남은 탄창
             ammoToFill = ammoRemain;
         }
+        //현재 총알에 필요한 총알만큼 채워줌
         magAmmo += ammoToFill;
+        //남은 총알에 필요한 총알을 빼줌
         ammoRemain -= ammoToFill;
-        state = State.Ready;
+        state = State.Ready;//상태 변경
     }
     #endregion
 
@@ -81,7 +84,7 @@ public class Gun : MonoBehaviour
         bulletLienRenderer.positionCount = 2;//사용할 점을 2개로 설정
         bulletLienRenderer.enabled = false;
     }
-
+    
     private void OnEnable()
     {
         magAmmo = magCapacity;
@@ -104,9 +107,9 @@ public class Gun : MonoBehaviour
         RaycastHit hit;//충돌 정보를 저장하기 위한 레이케스트
         Vector3 hitPosition = Vector3.zero;//탄알이 맞은 곳
 
+        //Ray를 쏴서 감지된 대상이 있다면
         if(Physics.Raycast(firePosition.position, firePosition.forward, out hit, fireDistance))
         {
-
             //충돌한 상태방으로부터 인터페이스를 가져옴
             IDamageable target = hit.collider.GetComponent<IDamageable>();
             if(target != null)//인터페이스를 가져오는데 성공했다면
@@ -130,11 +133,8 @@ public class Gun : MonoBehaviour
 
     public bool Reload()
     {
-        if(state == State.Reloading || ammoRemain <= 0 || magAmmo >= magCapacity)
-        {
-            return false;
-        }
-        StartCoroutine(ReloadRoutine());
+        if(state == State.Reloading || ammoRemain <= 0 || magAmmo >= magCapacity) return false;
+        StartCoroutine(ReloadRoutine());//리로드 코루틴을 실행시킴
         return true;
     }
 }
