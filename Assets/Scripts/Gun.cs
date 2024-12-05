@@ -22,18 +22,18 @@ public class Gun : MonoBehaviour
     private LineRenderer bulletLienRenderer;//탄알 궤적
 
     private AudioSource gunAudioSource;
-    public  AudioClip shotClip;
-    public  AudioClip reloadClip;
+    public AudioClip shotClip;
+    public AudioClip reloadClip;
 
-    public  float damage = 25;
+    public float damage = 25;
     private float fireDistance = 50f;
 
     public int ammoRemain = 100;
     public int magCapacity = 25;
     public int magAmmo;//현재 총알
 
-    public  float timeBetFire = 0.12f;
-    public  float reloadTime = 1.8f;
+    public float timeBetFire = 0.12f;
+    public float reloadTime = 1.8f;
     private float lastFireTime;
 
     #region 코루틴 함수 모음
@@ -51,7 +51,7 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(0.03f);
         bulletLienRenderer.enabled = false;
     }
-    
+
     private IEnumerator ReloadRoutine()
     {
         state = State.Reloading;
@@ -63,7 +63,7 @@ public class Gun : MonoBehaviour
         int ammoToFill = magCapacity - magAmmo;
 
         //현재 남은 총알이 남은 탄알 보다 적으면
-        if(ammoRemain < ammoToFill)
+        if (ammoRemain < ammoToFill)
         {
             //채워야 할 탄창은 = 남은 탄창
             ammoToFill = ammoRemain;
@@ -84,7 +84,7 @@ public class Gun : MonoBehaviour
         bulletLienRenderer.positionCount = 2;//사용할 점을 2개로 설정
         bulletLienRenderer.enabled = false;
     }
-    
+
     private void OnEnable()
     {
         magAmmo = magCapacity;
@@ -95,7 +95,7 @@ public class Gun : MonoBehaviour
     public void Fire()
     {
         //발가 사능 상태 and 마지막 총 발사 시점에서 timeBetFire 이상의 시간이 지나면
-        if(state == State.Ready && Time.time >= lastFireTime + timeBetFire)
+        if (state == State.Ready && Time.time >= lastFireTime + timeBetFire)
         {
             lastFireTime = Time.time;//발사 시점 갱신
             Shot();//발사
@@ -108,11 +108,11 @@ public class Gun : MonoBehaviour
         Vector3 hitPosition = Vector3.zero;//탄알이 맞은 곳
 
         //Ray를 쏴서 감지된 대상이 있다면
-        if(Physics.Raycast(firePosition.position, firePosition.forward, out hit, fireDistance))
+        if (Physics.Raycast(firePosition.position, firePosition.forward, out hit, fireDistance))
         {
             //충돌한 상태방으로부터 인터페이스를 가져옴
             IDamageable target = hit.collider.GetComponent<IDamageable>();
-            if(target != null)//인터페이스를 가져오는데 성공했다면
+            if (target != null)//인터페이스를 가져오는데 성공했다면
             {   //타겟의 onDamage를 실행시켜 데미지 적중)
                 target.onDamage(damage, hit.point, hit.normal);
             }
@@ -125,7 +125,7 @@ public class Gun : MonoBehaviour
         }
         StartCoroutine(ShotEffect(hitPosition));
         magAmmo--;
-        if(magAmmo <= 0)
+        if (magAmmo <= 0)
         {
             state = State.Empty;
         }
@@ -133,7 +133,7 @@ public class Gun : MonoBehaviour
 
     public bool Reload()
     {
-        if(state == State.Reloading || ammoRemain <= 0 || magAmmo >= magCapacity) return false;
+        if (state == State.Reloading || ammoRemain <= 0 || magAmmo >= magCapacity) return false;
         StartCoroutine(ReloadRoutine());//리로드 코루틴을 실행시킴
         return true;
     }

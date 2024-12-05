@@ -31,7 +31,8 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
     }
 
-    private void Update(){
+    private void Update()
+    {
         //UpdateAnimation(playerInput.moveInput);
     }
 
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
         Move(playerInput.moveInput);
         #endregion
-        
+
         //Rotate();
 
         playerAnimator.SetFloat("Move", playerInput.move);
@@ -61,12 +62,12 @@ public class PlayerMovement : MonoBehaviour
     public void Move(Vector2 moveInput)
     {
 
-        Vector3 m_Input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //Vector3 m_Input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        playerRigidbody.MovePosition(transform.position + m_Input * Time.fixedDeltaTime * moveSpeed);
+        //playerRigidbody.MovePosition(transform.position + m_Input * Time.fixedDeltaTime * moveSpeed);
 
-        //Vector3 moveDistance = playerInput.move * transform.forward * moveSpeed * Time.deltaTime;
-        //playerRigidbody.MovePosition(playerRigidbody.position + moveDistance);
+        Vector3 moveDistance = playerInput.move * transform.forward * moveSpeed * Time.deltaTime;
+        playerRigidbody.MovePosition(playerRigidbody.position + moveDistance);
 
     }
 

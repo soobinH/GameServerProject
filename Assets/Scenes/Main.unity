@@ -2358,6 +2358,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2715077573758266202, guid: 5314e1f0757cf4cf79d58731d117e6cd, type: 3}
+      propertyPath: playerPosition
+      value: 
+      objectReference: {fileID: 126285466}
+    - target: {fileID: 2715077573758266202, guid: 5314e1f0757cf4cf79d58731d117e6cd, type: 3}
       propertyPath: spawnPoints.Array.size
       value: 8
       objectReference: {fileID: 0}
