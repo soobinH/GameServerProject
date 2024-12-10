@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
     public float moveSpeed = 5f;
     public float rotateSpeed = 180f;
@@ -38,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!photonView.IsMine) return; // 자신이 아니면 그대로 리턴
+
         #region 마우스가 바라보는 방향으로 플레이어 회전
         if (isLookAt == false) return;
 

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerShooter : MonoBehaviour
+public class PlayerShooter : MonoBehaviourPun
 {
     public Gun gun;
     public Transform gunPivot;
@@ -27,6 +28,8 @@ public class PlayerShooter : MonoBehaviour
 
     private void Update()
     {
+        if (!photonView.IsMine) return; // 자신이 아니면 그대로 리턴
+
         if (playerInput.fire) gun.Fire();
         else if (playerInput.reload)
         {

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
@@ -21,6 +22,8 @@ public class ItemSpawner : MonoBehaviour
 
     private void Update()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
         if (Time.time >= lastSpawnTime + timeBetSpawn && playerTransform != null)
         {
             lastSpawnTime = Time.time;
@@ -35,7 +38,8 @@ public class ItemSpawner : MonoBehaviour
         spawnPoint += Vector3.up * 0.5f;
 
         GameObject selectedItem = items[Random.Range(0, items.Length)];
-        GameObject item = Instantiate(selectedItem, spawnPoint, Quaternion.identity);
+        string itemName = selectedItem.name;
+        GameObject item = PhotonNetwork.Instantiate(itemName, spawnPoint, Quaternion.identity);
 
         Destroy(item, 5f);
     }
