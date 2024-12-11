@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Unity.VisualScripting;
+using Cinemachine;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : MonoBehaviourPun
 {
     public string moveAxis = "Vertical";
     public string moveHorizontalAxis = "Horizontal";
@@ -22,6 +25,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine) return; // 자신이 아니면 그대로 리턴
         //게임오버 상태에서는 입력을 감지하지않음
         if (GameManager.Instance != null && GameManager.Instance.isGameOver)
         {

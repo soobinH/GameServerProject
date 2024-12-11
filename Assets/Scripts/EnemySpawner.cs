@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviourPun
 {
     public Transform playerPosition;
     public Enemy enemyPrefab;
@@ -35,6 +36,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         if (GameManager.Instance != null && GameManager.Instance.isGameOver) return;
         if (enemies.Count <= 0) SpawnWave();
     }
